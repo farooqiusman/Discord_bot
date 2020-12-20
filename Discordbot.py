@@ -61,13 +61,13 @@ async def youtube(ctx, *, src):
 
 
 #used to kill bot
-@client.event
-async def on_message(context):
-	if context.author == client.user:
-		return
+# @client.event
+# async def on_message(context):
+# 	if context.author == client.user:
+# 		return
 
-	if context.content == '!stop':
-		await client.logout()
+# 	if context.content == '!stop':
+# 		await client.logout()
 #################################
 
 

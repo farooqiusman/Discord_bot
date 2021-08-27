@@ -2,6 +2,7 @@ import random
 import os
 import discord
 from dotenv import load_dotenv
+from discord.ext import commands
 from discord.ext.commands import Bot  # importing the client
 import urllib.parse, urllib.request, re
 from discord import Game
@@ -9,6 +10,7 @@ from youtube_dl import YoutubeDL
 from discord import FFmpegPCMAudio
 from discord import TextChannel
 from discord.utils import get
+import asyncio
 
 BOT_PREFIX = ("?", "!")
 
@@ -16,20 +18,35 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = Bot(command_prefix=BOT_PREFIX)  # creating the discord bot client and command prefix
+client.remove_command("help")
+
+
+help_dict = {
+    "flip" : "?flip-a-coin\n\tFlips a coin",
+    "eight_ball" : "?8ball, !eight_ball, !8-ball <question>\n\tReturns an answer to a question",
+    "reply" : "?reply\n\tWill return a random reply from the bot",
+    "help" : "?hep\n\tWill display the help tab",
+    "mock" : "?mock <text>\n\tWill return the inputted string with random upper-case/lower-case letters",
+    "Greeting" : "?Greeting, ?hello\n\tWill have the bot say hello back to you",
+    "join" : "?join\n\tWill have the bot join a voice channel",
+    "play" : "?play <youtube url>\n\tWill have the bot play a song from youtube",
+}
+
+
+def getCharacters(digits):
+    return len(str(digits))
+
+def mockConverter(message):
+    newString = ""
+    for i in message:
+        newString += i.upper() if random.randint(0, 1) == 1 else i.lower()
+    return newString
 
 
 # Flipping a coin
 @client.command()
 async def flip(ctx):
-    flip  = 0
-    for i in range(10):
-        flip = random.randint(0, 1)
-
-    if (flip == 1):
-        await ctx.send('https://media1.giphy.com/media/U6SqBmifGGHkae9JFQ/giphy-downsized-large.gif')
-    else:
-        await ctx.send('https://giphy.com/gifs/sonic-gifs-gif-ZRLdT8KRzdk4g')
-
+    await ctx.send("https://media1.giphy.com/media/U6SqBmifGGHkae9JFQ/giphy-downsized-large.gif" if random.randint(1, 100) <= 50 else 'https://giphy.com/gifs/sonic-gifs-gif-ZRLdT8KRzdk4g')
 
 # Q ball shit
 @client.command(aliases=['8ball', 'eightball', '8-ball'])
@@ -41,7 +58,7 @@ async def eight_ball(context, *, question):
         'Too hard to tell',
         'Maybe',
     ]
-    await context.send(f'Question: {question}\n Answer: {random.choice(possible_responses)}')
+    await context.send(f'Question: {question}\nAnswer: {random.choice(possible_responses)}')
 
 
 # Greeting
@@ -160,22 +177,67 @@ async def pain(ctx):
 
     await ctx.send(file = picture)
 
-#used to kill bot
-# @client.event
-# async def on_message(context):
-# 	if context.author == client.user:
-# 		return
-
-# 	if context.content == '!stop':
-# 		await client.logout()
-#################################
-
-
+# on ready
 @client.event
 async def on_ready():
-    game = discord.Game("Playing with Faroochi")
+    game = discord.Game("with Faroochi and Ava")
     await client.change_presence(status=discord.Status.online, activity=game)
     print("Logged in as " + client.user.name)
+
+
+# clear
+@client.command(aliases = ['snap'])
+@commands.has_role("ADMIN")
+async def clear(ctx, *, amount=1):
+    await ctx.channel.purge(limit = amount + 1)
+
+# boxed points system
+@client.command()
+async def points(ctx):
+    f = open('points.txt', "r")
+    list = f.read().split('\n')
+    list = list[:-1]
+
+    num = 12 + getCharacters(list[0]) + getCharacters(list[1])
+    diff = num - 12
+    spaceDiff = 48 + diff
+    under_score = ('_' * (50 + diff))
+
+    space_before = (' ' * (int((spaceDiff - num)/2 - 1)))
+
+    space_after = (' ' * (int((spaceDiff - num)/2 - 1)))
+
+    under_score_inbetween = (' ' * (48 + diff))
+
+    underscore_after = ('_' * (48 + diff))
+    await ctx.send('``` The current points for Ava and Faroochi are as follows: \n'
+                   + '   ' + under_score + '\n'
+                   + '   |' + under_score_inbetween + '|\n' 
+                   + '   |' + space_before + 'Eva: ' + str(list[0]) + ', Usman: ' + str(list[1])
+                   + space_after + '|\n' 
+                   + '   |' + underscore_after + '|\n' + '```')
+
+# mockconverter
+@client.command()
+async def mock(ctx, *, message):
+    newString = mockConverter(message)
+    msg = await (ctx.message.channel).fetch_message(ctx.message.id)
+    await msg.delete()
+    await ctx.send(newString)
+
+# help
+@client.command()
+async def help(ctx, *, command=None):
+    embed = discord.Embed(title="HELP", colour=0xff1333)
+    if command is None:
+        for i in help_dict:
+            embed.add_field(name=i, value=help_dict[i], inline=False)
+    elif command in help_dict:
+        embed.add_field(name=command, value=help_dict[command], inline=False)
+    else:
+        await ctx.send("This command does not exist")
+        return
+    await ctx.send(embed=embed)
 
 
 client.run(TOKEN)  # run command to tell client to run the discord bot

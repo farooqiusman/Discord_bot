@@ -11,6 +11,8 @@ from discord import FFmpegPCMAudio
 from discord import TextChannel
 from discord.utils import get
 import asyncio
+from PIL import Image, ImageDraw
+import re
 
 BOT_PREFIX = ("?", "!")
 
@@ -197,7 +199,7 @@ async def points(ctx):
     f = open('points.txt', "r")
     list = f.read().split('\n')
     list = list[:-1]
-
+    f.close()
     num = 12 + getCharacters(list[0]) + getCharacters(list[1])
     diff = num - 12
     spaceDiff = 48 + diff
@@ -210,12 +212,56 @@ async def points(ctx):
     under_score_inbetween = (' ' * (48 + diff))
 
     underscore_after = ('_' * (48 + diff))
-    await ctx.send('``` The current points for Ava and Faroochi are as follows: \n'
+    img = Image.new('RGB', ((330 + diff*10),100), color = (54, 56, 63))
+    d = ImageDraw.Draw(img)
+
+
+    text = ('   The current points for Ava and Faroochi are as follows: \n'
                    + '   ' + under_score + '\n'
                    + '   |' + under_score_inbetween + '|\n' 
                    + '   |' + space_before + 'Eva: ' + str(list[0]) + ', Usman: ' + str(list[1])
                    + space_after + '|\n' 
-                   + '   |' + underscore_after + '|\n' + '```')
+                   + '   |' + underscore_after + '|\n')
+
+    d.text((10,10), text, fill=(255,255,255))
+    img.save('save.png')
+    await ctx.send(file=discord.File('save.png'))
+
+# points
+@client.command(aliases = ['UP', 'usmanpoints'])
+async def up(ctx, amounts):
+    user = ctx.message.author
+    authorname = str(user)[0:str(user).index('#')]
+    
+    f = open('points.txt', "r")
+    list = f.read().split('\n')
+    list = list[:-1]
+    f.close()
+    opp = None
+    if authorname == 'Chobaka78': 
+        opp = "Ava"
+        with open('points.txt', 'r+') as f:
+            text = f.read()
+            text = re.sub(str(list[0]), str(int(list[0]) + int(amounts)), text)
+            f.seek(0)
+            f.write(text)
+            f.truncate()
+
+        f.close()
+
+    elif authorname == 'eva':
+        opp = "Faroochi"
+        with open('points.txt', 'r+') as f:
+            text = f.read()
+            text = re.sub(str(list[1]), str(int(list[1]) + int(amounts)), text)
+            f.seek(0)
+            f.write(text)
+            f.truncate()
+
+        f.close()
+
+    await ctx.send("Amount: " + str(amounts) + " added to " + opp)
+
 
 # mockconverter
 @client.command()

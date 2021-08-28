@@ -17,7 +17,7 @@ import re
 BOT_PREFIX = ("?", "!")
 
 load_dotenv()
-TOKEN = os.environ('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = Bot(command_prefix=BOT_PREFIX)  # creating the discord bot client and command prefix
 client.remove_command("help")

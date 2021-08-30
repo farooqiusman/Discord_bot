@@ -14,7 +14,7 @@ import asyncio
 from PIL import Image, ImageDraw
 import re
 
-BOT_PREFIX = ("?", "!")
+BOT_PREFIX = ("?")
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -32,6 +32,7 @@ help_dict = {
     "Greeting" : "?Greeting, ?hello\n\tWill have the bot say hello back to you",
     "join" : "?join\n\tWill have the bot join a voice channel",
     "play" : "?play <youtube url>\n\tWill have the bot play a song from youtube",
+    "update" : "?update/UP/EP <amount>\n\tWill update the points for person"
 }
 
 
@@ -228,8 +229,8 @@ async def points(ctx):
     await ctx.send(file=discord.File('save.png'))
 
 # points
-@client.command(aliases = ['UP', 'usmanpoints'])
-async def up(ctx, amounts):
+@client.command(aliases = ['UP', 'usmanpoints', 'EP', 'ep', 'up'])
+async def update(ctx, amounts):
     user = ctx.message.author
     authorname = str(user)[0:str(user).index('#')]
     

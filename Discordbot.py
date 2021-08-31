@@ -225,7 +225,7 @@ async def points(ctx):
     d = ImageDraw.Draw(img)
 
 
-    text = ('   The current points for Eva and Usman are as follows: \n'
+    text = ('   The current points for Ava and Faroochi are as follows: \n'
                    + '   ' + under_score + '\n'
                    + '   |' + under_score_inbetween + '|\n' 
                    + '   |' + space_before + 'Eva: ' + str(list[0]) + ', Usman: ' + str(list[1])

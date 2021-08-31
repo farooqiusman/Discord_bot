@@ -13,7 +13,6 @@ from discord.utils import get
 import asyncio
 from PIL import Image, ImageDraw
 import re
-import urllib2
 
 
 BOT_PREFIX = ("?")

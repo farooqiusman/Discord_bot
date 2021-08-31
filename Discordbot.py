@@ -13,6 +13,8 @@ from discord.utils import get
 import asyncio
 from PIL import Image, ImageDraw
 import re
+import urllib2
+
 
 BOT_PREFIX = ("?")
 
@@ -183,7 +185,7 @@ async def disconnect(ctx):
 # pain command
 @client.command(aliases = ['PAIN', 'Pain'])
 async def pain(ctx):
-    with open('/home/usman/Documents/usman_pain.PNG', 'rb') as f:
+    with open('usman_pain.PNG', 'rb') as f:
         picture = discord.File(f)
 
     await ctx.send(file = picture)

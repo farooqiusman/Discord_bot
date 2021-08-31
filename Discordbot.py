@@ -77,8 +77,8 @@ async def Greeting(context):
     await context.send("Hello! " + context.message.author.mention)
 
 # Ping
-@client.command(ctx)
-async def ping(context):
+@client.command()
+async def ping(ctx):
     await ctx.send(f"Latency: {round(client.latency * 1000)}ms")
 
 # Replies
@@ -210,7 +210,7 @@ async def clear(ctx, *, amount=1):
 # boxed points system
 @client.command()
 async def points(ctx):
-    f = open('points.txt', "r")
+    f = open('/home/farooqi/Desktop/points.txt', "r")
     list = f.read().split('\n')
     list = list[:-1]
     f.close()

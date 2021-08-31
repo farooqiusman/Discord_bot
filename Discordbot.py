@@ -32,7 +32,13 @@ help_dict = {
     "Greeting" : "?Greeting, ?hello\n\tWill have the bot say hello back to you",
     "join" : "?join\n\tWill have the bot join a voice channel",
     "play" : "?play <youtube url>\n\tWill have the bot play a song from youtube",
-    "update" : "?update/UP/EP <amount>\n\tWill update the points for person"
+    "pause" : "?pause\n\tWill pause the current playback",
+    "stop" : "?stop\n\tWill stop the current playback",
+    "disconnect" : "?disconnect\n\tWill disconnect the bot from the voice channel",
+    "resume" : "?resume\n\tWille resume the current playback",
+    "update" : "?update/UP/EP <amount>\n\tWill update the points for person",
+    "points" : "?points <amount>\n\tWill send a screen shot of the updated points for both members in server",
+    "pain" : "?pain \n\tWill send a painful picture of usman to describe how much pain one is in"
 }
 
 
@@ -87,6 +93,8 @@ async def reply(ctx):
         'I just want a body so I could kill you and your family',
         'My walls are green :pain:',
         'My uterine wall is shedding',
+        'Eva is very very hot',
+        'Usman is very very sexy',
     ]
     await ctx.send(random.choice(possible_replies))
 
@@ -166,7 +174,7 @@ async def stop(ctx):
         voice.stop()
         await ctx.send('Bot has stopped playback')
 
-# discconect command
+# disconnect command
 @client.command(aliases = ['dc', 'DC', 'Dc', 'fuckoff', 'leave'])
 async def disconnect(ctx): 
     voice = get(client.voice_clients, guild = ctx.guild)
@@ -217,7 +225,7 @@ async def points(ctx):
     d = ImageDraw.Draw(img)
 
 
-    text = ('   The current points for Ava and Faroochi are as follows: \n'
+    text = ('   The current points for Eva and Usman are as follows: \n'
                    + '   ' + under_score + '\n'
                    + '   |' + under_score_inbetween + '|\n' 
                    + '   |' + space_before + 'Eva: ' + str(list[0]) + ', Usman: ' + str(list[1])

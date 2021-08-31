@@ -185,7 +185,7 @@ async def disconnect(ctx):
 # pain command
 @client.command(aliases = ['PAIN', 'Pain'])
 async def pain(ctx):
-    with open('usman_pain.PNG', 'rb') as f:
+    with open('usman_pain.png', 'rb') as f:
         picture = discord.File(f)
 
     await ctx.send(file = picture)

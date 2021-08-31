@@ -76,6 +76,10 @@ async def eight_ball(context, *, question):
 async def Greeting(context):
     await context.send("Hello! " + context.message.author.mention)
 
+# Ping
+@client.command(ctx)
+async def ping(context):
+    await ctx.send(f"Latency: {round(client.latency * 1000)}ms")
 
 # Replies
 @client.command(aliases=['yo', 'Yo', 'YO'])
@@ -294,6 +298,10 @@ async def help(ctx, *, command=None):
         await ctx.send("This command does not exist")
         return
     await ctx.send(embed=embed)
+
+@client.command()
+async def test(ctx):
+    await ctx.send("This is to test that the bot is working on server after new push")
 
 
 client.run(TOKEN)  # run command to tell client to run the discord bot

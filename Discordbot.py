@@ -254,7 +254,7 @@ async def update(ctx, amounts):
     opp = None
     if authorname == 'Chobaka78': 
         opp = "Ava"
-        with open('points.txt', 'r+') as f:
+        with open('/home/farooqi/Desktop/points.txt', 'r+') as f:
             text = f.read()
             text = re.sub(str(list[0]), str(int(list[0]) + int(amounts)), text)
             f.seek(0)
@@ -265,7 +265,7 @@ async def update(ctx, amounts):
 
     elif authorname == 'eva':
         opp = "Faroochi"
-        with open('points.txt', 'r+') as f:
+        with open('/home/farooqi/Desktop/points.txt', 'r+') as f:
             text = f.read()
             text = re.sub(str(list[1]), str(int(list[1]) + int(amounts)), text)
             f.seek(0)

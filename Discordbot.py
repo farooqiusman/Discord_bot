@@ -247,7 +247,7 @@ async def update(ctx, amounts):
     user = ctx.message.author
     authorname = str(user)[0:str(user).index('#')]
     
-    f = open('points.txt', "r")
+    f = open('/home/farooqi/Desktop/points.txt', "r")
     list = f.read().split('\n')
     list = list[:-1]
     f.close()

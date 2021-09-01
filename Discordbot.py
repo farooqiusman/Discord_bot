@@ -191,6 +191,8 @@ async def pain(ctx):
     with open('usman_pain.png', 'rb') as f:
         picture = discord.File(f)
 
+    msg = await (ctx.message.channel).fetch_message(ctx.message.id)
+    await msg.delete()
     await ctx.send(file = picture)
 
 # on ready

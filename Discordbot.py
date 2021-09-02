@@ -39,7 +39,8 @@ help_dict = {
     "resume" : "?resume\n\tWille resume the current playback",
     "update" : "?update/UP/EP <amount>\n\tWill update the points for person",
     "points" : "?points <amount>\n\tWill send a screen shot of the updated points for both members in server",
-    "pain" : "?pain \n\tWill send a painful picture of usman to describe how much pain one is in"
+    "pain" : "?pain \n\tWill send a painful picture of usman to describe how much pain one is in",
+    "motto" : "?mott\n\tWill display the server motto"
 }
 
 
@@ -302,8 +303,8 @@ async def help(ctx, *, command=None):
     await ctx.send(embed=embed)
 
 @client.command()
-async def test(ctx):
-    await ctx.send("This is to test that the bot is working on server after new push")
+async def motto(ctx):
+    await ctx.send("```Server motto: \n-Always head\n-Always forgive\n-Always b safe\n-Always hugs\n```")
 
 
 client.run(TOKEN)  # run command to tell client to run the discord bot

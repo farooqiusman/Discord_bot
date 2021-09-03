@@ -304,7 +304,7 @@ async def help(ctx, *, command=None):
 
 @client.command()
 async def motto(ctx):
-    await ctx.send("```Server motto: \n-Always head\n-Always forgive\n-Always b safe\n-Always hugs\n-Always speak before you think\n```")
+    await ctx.send("```Server motto: \n-Always head\n-Always forgive\n-Always b safe\n-Always hugs\n-Always speak before you think\n-Always b strong\n```")
 
 
 client.run(TOKEN)  # run command to tell client to run the discord bot
